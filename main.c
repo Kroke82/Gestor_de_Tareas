@@ -7,7 +7,7 @@ int main(void){
     int total = 0;
     int expression;
     do{
-        printf("\n1. Agregar tarea\n2. Listar tareas\n3. Marcar Completada\n0. Salir\nOpcion: ");
+        printf("\n1. Agregar tarea\n2. Listar tareas\n3. Marcar Completada\n4. Guardar en archivo\n0. Salir\nOpcion: ");
         scanf("%i", &expression);
 
         switch (expression)
@@ -20,6 +20,9 @@ int main(void){
             break;
         case (3):
             marcarCompletada(tareas, total);
+            break;
+        case (4):
+            guardarEnArchivo(tareas, total);
             break;
         default:
             break;

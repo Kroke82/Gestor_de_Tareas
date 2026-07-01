@@ -1,4 +1,4 @@
-#include "GestorTareas.h"le
+#include "GestorTareas.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -67,4 +67,16 @@ void marcarCompletada(Tarea tareas[], int total){
             }
         }
     }    
+}
+void guardarEnArchivo(Tarea tareas[], int total){
+    FILE *f = fopen("Lista_Tareas.csv", "w");
+    if(f == NULL){
+        printf("Error al abrir o crear el archivo");
+        return;
+    }
+    fprintf(f,"id;descripcion;completada;prioridad\n");
+    for(int i = 0; i < total; i++){
+        fprintf(f,"%d;\"%s\";%d;%d\n", tareas[i].id,tareas[i].descripcion, tareas[i].completada, tareas[i].prioridad);
+    }
+    fclose(f);    
 }
