@@ -1,6 +1,8 @@
 #include "GestorTareas.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 
 void agregarTarea(Tarea tareas[], int *total){    
@@ -74,9 +76,34 @@ void guardarEnArchivo(Tarea tareas[], int total){
         printf("Error al abrir o crear el archivo");
         return;
     }
-    fprintf(f,"id;descripcion;completada;prioridad\n");
     for(int i = 0; i < total; i++){
         fprintf(f,"%d;\"%s\";%d;%d\n", tareas[i].id,tareas[i].descripcion, tareas[i].completada, tareas[i].prioridad);
     }
     fclose(f);    
+}
+
+void cargarDesdeArchivo(Tarea tareas[], int *total){
+    char buffer[150];
+    *total = 0;
+    char *token;
+    FILE *f = fopen("Lista_Tareas.csv", "r");
+    if(f == NULL){
+        printf("Error al abrir o crear el archivo");
+        return;
+    }else{
+        fgets(buffer, 150, f );
+        while (fgets(buffer, sizeof(buffer), f) != NULL){
+                token = strtok(buffer, ";");
+                tareas[*total].id = atoi(token);
+                token = strtok(NULL, ";");
+                strcpy(tareas[*total].descripcion, token);
+                token = strtok(NULL, ";");
+                tareas[*total].completada = atoi(token);
+                token = strtok(NULL, ";");
+                tareas[*total].prioridad = atoi(token);
+                (*total)++;
+        }
+        fclose(f);       
+    }
+
 }
